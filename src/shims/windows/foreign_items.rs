@@ -27,6 +27,13 @@ fn win_absolute<'tcx>(path: &Path) -> InterpResult<'tcx, io::Result<PathBuf>> {
     return Ok(path::absolute(path));
 }
 
+#[cfg(target_os = "wasi")]
+fn win_absolute<'tcx>(path: &Path) -> InterpResult<'tcx, io::Result<PathBuf>> {
+    // TODO: is there a good way to get the absolute path of a file in WASI?
+    // @WASMPATCH
+    return Ok(path::absolute(path));
+}
+
 #[cfg(unix)]
 #[allow(clippy::get_first, clippy::arithmetic_side_effects)]
 fn win_absolute<'tcx>(path: &Path) -> InterpResult<'tcx, io::Result<PathBuf>> {
