@@ -457,6 +457,11 @@ pub trait EvalContextExt<'mir, 'tcx: 'mir>: crate::MiriInterpCxExt<'mir, 'tcx> {
             if src.is_dir() { fs::symlink_dir(src, dst) } else { fs::symlink_file(src, dst) }
         }
 
+        #[cfg(target_os = "wasi")]
+        fn create_link(src: &Path, dst: &Path) -> std::io::Result<()> {
+            std::os::wasi::fs::symlink_path(src, dst)
+        }
+
         let this = self.eval_context_mut();
         let target = this.read_path_from_c_str(this.read_pointer(target_op)?)?;
         let linkpath = this.read_path_from_c_str(this.read_pointer(linkpath_op)?)?;
