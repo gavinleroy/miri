@@ -14,6 +14,7 @@
 #![feature(trait_upcasting)]
 #![feature(strict_overflow_ops)]
 #![feature(strict_provenance)]
+#![cfg(target_os = "wasi")]
 #![feature(wasi_ext)]
 // Configure clippy and other lints
 #![allow(
